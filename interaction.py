@@ -9,6 +9,7 @@ Cost of setup
 Repository maintenance
 User input
 """
+from operator import attrgetter
 
 class User(object):
 	"""Keeps track of important user information
@@ -54,7 +55,15 @@ def interpretationEngine(data,attribute):
 		'data'  a list of user instances
 		'attribute' the desired means by which to sort the data
 	"""
-	for element in data:
+	valid = ["alias", "delta", "score"]
+	if str(attribute) in valid:
+		return(data.sort(key = attrgetter(str(attribute))))
+
+	else: 
+		print("error: Invalid attribute.")
+		return None
+
+
 
 data = []
 
