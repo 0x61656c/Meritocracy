@@ -1,4 +1,3 @@
-print("Test")
 class User(object):
 	"""Keeps track of important user information
 
@@ -8,7 +7,7 @@ class User(object):
 		'delta' change in score in the past 24 hours, in pips of size 10^-5
 
 	"""
-	def __init__(self, alias, score, delta):
+	def __init__(self, alias, score, delta = 0):
 		self.alias = alias
 		self.score = score
 		self.delta = delta

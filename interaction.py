@@ -10,45 +10,10 @@ Repository maintenance
 User input
 """
 from operator import attrgetter
+from classes import User
+import copy
 
-class User(object):
-	"""Keeps track of important user information
-
-	Arguments:
-		'alias' -user identifier
-		'score' -curent score on the system measured in pips of size 10^-5
-		'delta' -change in score in the past 24 hours, in pips of size 10^-5
-
-	"""
-	def __init__(self, alias, score, delta):
-		self.alias = alias
-		self.score = score
-		self.delta = delta
-
-	def __repr__(self):
-		return "<User Object: Alias = %s, Score = %s>" %(self.alias,self.score)
-
-	def getAlias(self):
-		"""return the alias attribute of a user instance"""
-		return self.alias
-
-	def getScore(self):
-		"""return the score attribute for a user instance"""
-		return self.score
-
-	def getDelta(self):
-		"""return the delta attribute for a user instance"""
-		return self.delta
-
-	def changeScore(self, new):
-		"""Changes the score of a User instance"""
-		self.score = new
-
-	def adjustScore(self, amount):
-		"""Adjusts score based on a prediction"""
-		self.score += amount
-
-def interpretationEngine(data,attribute):
+def interpret(data,attribute):
 	"""Interprets user data into usable information
 
 	Arguments:
@@ -56,6 +21,7 @@ def interpretationEngine(data,attribute):
 		'attribute' the desired means by which to sort the data
 	"""
 	valid = ["alias", "delta", "score"]
+	
 	if str(attribute) in valid:
 		return(data.sort(key = attrgetter(str(attribute))))
 
@@ -65,12 +31,29 @@ def interpretationEngine(data,attribute):
 
 
 
-data = []
-
 def testInterpretationEngine():
+	user1 = User("Aaron", 500,50)
+	user2 = User("Connor", 5,5)
+	user3 = User("Jeff", 50,500)
+
+	data = [user1, user2, user3]
+
 	print("Testing Interpretation Engine")
 	print()
-	assert(x = x)
+	
+	assert(interpret(copy.copy([data]), "alias") == data)
 	print("Test-Case 1 Passed.")
+	
+	assert(interpret(copy.copy([data]), "delta") == [user2, user1, user3])
+	
+	a = interpret(copy.copy([data]), "delta")
+	assert(a[0] == user2)
 	print("Test-Case 2 Passed.")
+
 	print("All Tests Passed!")
+
+def main():
+	testInterpretationEngine()
+
+if __name__ == "__main__":
+	main()
